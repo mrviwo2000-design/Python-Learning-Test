@@ -43,8 +43,6 @@ class MathCalculator:
         """
         if n < 0:
             raise ValueError("Факториал отрицательного числа не определен")
-        if n == 0:
-            return 1
         result = 1
         for i in range(1, n + 1):
             result *= i
@@ -54,7 +52,7 @@ class MathCalculator:
         """
         Проверка числа на простоту
         """
-        if n < 2:
+        if n < 1:
             return False
         for i in range(2, int(n ** 0.5) + 1):
             if n % i == 0:
@@ -142,4 +140,5 @@ def main():
 
 
 if __name__ == "__main__":
+
     main()
