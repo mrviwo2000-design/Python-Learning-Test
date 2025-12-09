@@ -60,8 +60,12 @@ class TestMathCalculator:
     ])
     def test_factorial_parametrized(self, calculator, n, expected):
         """Параметризованный тест факториала"""
-        assert calculator.factorial(n) == expected
-
+        assert calculator.factorial1(n) == expected
+    def test_factorial_parametrized(self, calculator, n, expected):
+        """Параметризованный тест факториала"""
+        assert calculator.factorial2(n) == expected
+        
+    
     # Группа: number_theory
     @pytest.mark.number_theory
     def test_is_prime(self, calculator):
@@ -91,7 +95,13 @@ class TestMathCalculator:
     def test_factorial_negative(self, calculator):
         """Тест исключения при факториале отрицательного числа"""
         with pytest.raises(ValueError, match="Факториал отрицательного числа не определен"):
-            calculator.factorial(-5)
+            calculator.factorial1(-5)
+
+    @pytest.mark.exception_tests
+    def test_factorial_negative(self, calculator):
+        """Тест исключения при факториале отрицательного числа"""
+        with pytest.raises(ValueError, match="Факториал отрицательного числа не определен"):
+            calculator.factorial2(-5)
 
     @pytest.mark.exception_tests
     def test_power_zero_negative(self, calculator):
@@ -213,3 +223,4 @@ class TestMathCalculatorEdgeCases:
         assert calculator.factorial(0) == 1
         assert calculator.factorial(1) == 1
         assert calculator.factorial(10) == 3628800
+
