@@ -37,27 +37,24 @@ class MathCalculator:
             raise ValueError("Ноль в отрицательной степени не определен")
         return base ** exponent
 
-    def factorial1(self, n: int) -> int:
+    def factorial1(self, n: int, s: Str) -> int:
         """
-        Вычисление факториала1 числа
+        Вычисление факториала числа
         """
         if n < 0:
-            raise ValueError("Факториал отрицательного числа не определен")
-        result = 1
-        for i in range(1, n + 1):
-            result *= i
-        return result
+                raise ValueError("Факториал отрицательного числа не определен")
+            
+        if Str == "Рек":
+                result = 1
+            if n <= 1:  # базовый случай
+                return 1
+            return n * factorial2(n - 1)  # рекурсивный случай
         
-    def factorial(self, n: int) -> int:
-        """
-        Вычисление факториала2 числа 
-        """
-        if n < 0:
-            raise ValueError("Факториал отрицательного числа не определен")
-        result = 1
-        if n <= 1:  # базовый случай
-            return 1
-        return n * factorial2(n - 1)  # рекурсивный случай
+        elif Str == "Не рек":
+            result = 1
+            for i in range(1, n + 1):
+                result *= i
+            return result
 
     def is_prime(self, n: int) -> bool:
         """
@@ -110,7 +107,7 @@ def main():
     print("3. Умножение")
     print("4. Деление")
     print("5. Возведение в степень")
-    print("6. Факториал")
+    print("6. Факториал (Рек; Не рек)")
     print("7. Проверка на простое число")
     print("8. Число Фибоначчи")
     print("9. Число в процент")
@@ -142,14 +139,8 @@ def main():
             n = int(input("Введите число: "))
 
             if choice == '6':
-                ss = input("Выберите операцию (1 или 2): ")
-                if ss == 1:
-                    result = calculator.factorial1(n)
-                    print(f"Факториал {n} = {result}")
-
-                if ss == 2:
-                    result = calculator.factorial2(n)
-                    print(f"Факториал {n} = {result}")
+                result = calculator.factorial(n)
+                print(f"Факториал {n} = {result}")
             elif choice == '7':
                 result = calculator.is_prime(n)
                 status = "простое" if result else "не простое"
@@ -173,4 +164,5 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
