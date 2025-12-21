@@ -10,7 +10,13 @@ class TestMathCalculator:
         """Фикстура для создания экземпляра калькулятора"""
         return MathCalculator()
 
-    # Группа: basic_operations
+    @pytest.mark.basic_operations
+    def test_procent(self, calculator):
+        """Тест перевода числа в процент"""
+        assert calculator.procent(30) == 0.3
+        assert calculator.procent(23) == 0.23
+        assert calculator.procent(100) == 1
+
     @pytest.mark.basic_operations
     def test_add(self, calculator):
         """Тест сложения"""
@@ -43,7 +49,6 @@ class TestMathCalculator:
         """Параметризованный тест деления"""
         assert calculator.divide(a, b) == expected
 
-    # Группа: advanced_operations
     @pytest.mark.advanced_operations
     def test_power(self, calculator):
         """Тест возведения в степень"""
@@ -52,21 +57,20 @@ class TestMathCalculator:
         assert calculator.power(4, 0.5) == 2
 
     @pytest.mark.advanced_operations
-    @pytest.mark.parametrize("n, expected", [
-        (0, 1),
-        (1, 1),
-        (5, 120),
-        (7, 5040),
+    @pytest.mark.parametrize("n, expected, s", [
+        (0, 1, "Рек"),
+        (1, 1, "Рек"),
+        (5, 120, "Рек"),
+        (7, 5040, "Рек"),
+        (0, 1, "Не рек"),
+        (1, 1, "Не рек"),
+        (5, 120, "Не рек"),
+        (7, 5040, "Не рек"),
     ])
-    def test_factorial_parametrized(self, calculator, n, expected):
+    def test_factorial_parametrized(self, calculator, n, expected, s):
         """Параметризованный тест факториала"""
-        assert calculator.factorial1(n) == expected
-    def test_factorial_parametrized(self, calculator, n, expected):
-        """Параметризованный тест факториала"""
-        assert calculator.factorial2(n) == expected
+        assert calculator.factorial(n,s) == expected
         
-    
-    # Группа: number_theory
     @pytest.mark.number_theory
     def test_is_prime(self, calculator):
         """Тест проверки простых чисел"""
@@ -84,7 +88,6 @@ class TestMathCalculator:
         assert calculator.fibonacci(5) == 5
         assert calculator.fibonacci(10) == 55
 
-    # Группа: exception_tests
     @pytest.mark.exception_tests
     def test_divide_by_zero(self, calculator):
         """Тест исключения при делении на ноль"""
@@ -114,6 +117,12 @@ class TestMathCalculator:
         """Тест исключения при отрицательном индексе Фибоначчи"""
         with pytest.raises(ValueError, match="Число Фибоначчи для отрицательного индекса не определено"):
             calculator.fibonacci(-1)
+
+    @pytest.mark.exception_tests
+    def test_procent_negativ(self, calculator):
+        """Тест исключения при отрицательном числе"""
+        with pytest.raises(ValueError, match="Число отрицательно"):
+            calculator.procent(-10)
 
 
 class TestMathCalculatorPrecision:
@@ -220,7 +229,12 @@ class TestMathCalculatorEdgeCases:
     @pytest.mark.edge_cases
     def test_factorial_edge_cases(self, calculator):
         """Тест граничных случаев для факториала"""
-        assert calculator.factorial(0) == 1
-        assert calculator.factorial(1) == 1
-        assert calculator.factorial(10) == 3628800
+        assert calculator.factorial(0, "Не рек") == 1
+        assert calculator.factorial(1, "Не рек") == 1
+        assert calculator.factorial(10, "Не рек") == 3628800
+        assert calculator.factorial(0, "Рек") == 1
+        assert calculator.factorial(1, "Рек") == 1
+        assert calculator.factorial(10, "Рек") == 3628800
+
+
 
