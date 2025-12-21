@@ -89,7 +89,7 @@ class MathCalculator:
         Деление числа на 100 -> процентное число
         """
         if n < 0:
-            return False
+            raise ValueError("Число отрицательно")
         if n >= 0:
             n = n / 100
             return n
@@ -164,5 +164,6 @@ def main():
 if __name__ == "__main__":
 
     main()
+
 
 
